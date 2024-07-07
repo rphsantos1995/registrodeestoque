@@ -1,11 +1,11 @@
-/* 
+/*
     TODO:
         * Melhorar o menu - CLI em geral
-        * Automatizar a variavel ID
+        * Automatizar a variavel ID - OK
         * Função de consulta:
             * por ID
             * Geral, ordenada
-        * Funçaõ de ordenação: 
+        * Funçaõ de ordenação:
             * bubble sort por data
  */
 #include <stdio.h>
@@ -16,6 +16,8 @@
 #define false 0
 
 typedef int bool;
+
+int globalID = 0;
 
 typedef struct {
     int dia;
@@ -61,16 +63,39 @@ int tamanho(LISTA* l) {
 void exibirLista(LISTA* l) {
     PONT end = l->inicio;
     while (end != NULL) {
-        printf("ID: %d, Name: %s, Quantity: %d, Date: %02d/%02d - %02d:%02d:%02d\n", end->reg.ID, end->reg.nome, end->reg.quantidade, end->reg.data.dia, end->reg.data.mes, end->reg.data.hora, end->reg.data.minuto, end->reg.data.segundo);
+        printf("ID: %d\n", end->reg.ID);
+        printf("Produto: %s\n", end->reg.nome);
+        printf("Quantidade: %d\n", end->reg.quantidade);
+        printf("Criado em: %02d/%02d - %02d:%02d:%02d\n", end->reg.data.dia, end->reg.data.mes, end->reg.data.hora, end->reg.data.minuto, end->reg.data.segundo);
+        printf("-------------------------------------------\n");
         end = end->prox;
     }
-} 
+}
+
+void load_global_id() {
+    FILE *file = fopen("global_id.txt", "r+");
+    if (file != NULL) {
+        fscanf(file, "%d", &globalID);
+        fclose(file);
+    }
+}
+
+void save_global_id() {
+    FILE *file = fopen("global_id.txt", "w");
+    if (file != NULL) {
+        fprintf(file, "%d", globalID);
+        fclose(file);
+    }
+}
 
 bool insere(LISTA* l, PRODUTO reg) {
     /* if (pos < 0 || pos > tamanho(l))
         return false; */
-    
+
     ELEMENTO *novo = (ELEMENTO*)malloc(sizeof(ELEMENTO));
+    load_global_id();
+    reg.ID = globalID++;
+    save_global_id();
     novo->reg = reg;
     novo->prox = l->inicio;
     l->inicio = novo;
@@ -89,7 +114,7 @@ bool insere(LISTA* l, PRODUTO reg) {
 bool exclui(LISTA* l, int pos) {
     if (pos < 0 || pos > tamanho(l) - 1)
         return false;
-    
+
     PONT apagar;
     if (pos == 0) {
         apagar = l->inicio;
@@ -175,9 +200,6 @@ int main() {
         if (opcao == 1) {
             PRODUTO produto;
             system("clear");
-            printf("Digite o ID do produto: ");
-            scanf("%d", &produto.ID);
-            getchar();
             printf("Digite o nome do produto: ");
             scanf("%s", &produto.nome[0]);
             printf("Digite a quantidade do produto: ");
