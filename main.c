@@ -88,10 +88,22 @@ void save_global_id() {
     }
 }
 
-bool insere(LISTA* l, PRODUTO reg) {
-    /* if (pos < 0 || pos > tamanho(l))
-        return false; */
+void bubbleSortPorData(LISTA *listaprodutos);
+int comparacaoDatas(DATA d1, DATA d2);
 
+void atualizaestoque(LISTA *l){
+  FILE *arquivo = fopen("estoque.bin", "wb");
+  if (arquivo == NULL) return;
+
+  ELEMENTO *atual = l->inicio;
+  while (atual != NULL) {
+      fwrite(&atual->reg, sizeof(PRODUTO), 1, arquivo);
+      atual = atual->prox;
+  }
+  fclose(arquivo);
+}
+
+void insere(LISTA *l, PRODUTO reg) {
     ELEMENTO *novo = (ELEMENTO*)malloc(sizeof(ELEMENTO));
     load_global_id();
     reg.ID = globalID++;
@@ -99,34 +111,33 @@ bool insere(LISTA* l, PRODUTO reg) {
     novo->reg = reg;
     novo->prox = l->inicio;
     l->inicio = novo;
-    /* if (pos == 0) {
-        novo->prox = l->inicio;
-        l->inicio = novo;
-    } else {
-        PONT p = l->inicio;
-        for (int i = 0; i < pos - 1; i++) p = p->prox;
-        novo->prox = p->prox;
-        p->prox = novo;
-    } */
-    return true;
+    bubbleSortPorData(l);
+    atualizaestoque(l);
 }
 
-bool exclui(LISTA* l, int pos) {
-    if (pos < 0 || pos > tamanho(l) - 1)
-        return false;
+void exclui(LISTA* l, int id) {
+    ELEMENTO *atual = l->inicio;
+    ELEMENTO *anterior = NULL;
 
-    PONT apagar;
-    if (pos == 0) {
-        apagar = l->inicio;
-        l->inicio = apagar->prox;
-    } else {
-        PONT p = l->inicio;
-        for (int i = 0; i < pos - 1; i++) p = p->prox;
-        apagar = p->prox;
-        p->prox = apagar->prox;
+    while(atual != NULL && atual->reg.ID != id){
+      anterior = atual;
+      atual = atual->prox;
     }
-    free(apagar);
-    return true;
+
+    if (atual != NULL) {
+      if (anterior == NULL) {
+          l->inicio = atual->prox;
+        } else {
+          anterior->prox = atual->prox;
+        }
+
+      free(atual);
+      printf("\nItem excluido com sucesso!!\n");
+      bubbleSortPorData(l);
+      atualizaestoque(l);
+    } else {
+      printf("\nItem não encontrado! Tente outro ID!!\n");
+    }
 }
 
 void reinicializarLista(LISTA* l) {
@@ -143,6 +154,7 @@ void menu() {
     printf("Escolha uma opção:\n");
     printf("1. Adicionar produto\n");
     printf("2. Tamanho da lista\n");
+    printf("3. Remover da lista\n");
     printf("4. Listar produtos\n");
     printf("5. Sair\n");
 }
@@ -218,6 +230,19 @@ int main() {
         } else if (opcao == 2){
             system("clear");
             printf("Tamanho da lista: %i\n", tamanho(&listaProdutos));
+        } else if (opcao == 3){
+            int id;
+            system("clear");
+            if (tamanho(&listaProdutos) == 0){
+              printf("Lista vazia - sem elementos para remover!\n\n");
+              continue;
+            }
+            else {
+              printf("======================== Removendo item da lista!!!! ========================\n");
+              printf("ID do item: ");
+              scanf("%d", &id);
+              exclui(&listaProdutos, id);
+            }
         } else if (opcao == 4) {
             system("clear");
             bubbleSortPorData(&listaProdutos);
