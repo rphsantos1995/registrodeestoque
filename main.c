@@ -1,12 +1,7 @@
 /*
-    TODO:
-        * Melhorar o menu - CLI em geral
-        * Automatizar a variavel ID - OK
-        * Função de consulta:
-            * por ID
-            * Geral, ordenada
-        * Funçaõ de ordenação:
-            * bubble sort por data
+  TODO:
+      * Remover e consultar com lista de produtos (nome e ID)
+      * Ler arquivo estoque.bin e armazenar na lista
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -62,7 +57,7 @@ int tamanho(LISTA* l) {
     return tam;
 }
 
-void exibirLista(LISTA* l) {
+void exibirLista(LISTA *l) {
     PONT end = l->inicio;
     while (end != NULL) {
         printf("ID: %d\n", end->reg.ID);
@@ -105,11 +100,32 @@ void atualizaestoque(LISTA *l){
   fclose(arquivo);
 }
 
+void Registra(PRODUTO reg){
+    FILE *pa = fopen("log.txt", "a");
+    if(!pa){
+        printf("erro.");
+        exit(1);
+    }
+    fprintf(pa,"Foi acrescentado %d unidade(s) do produto %s (ID: %d) no estoque.\n", reg.quantidade, reg.nome, reg.ID);
+    fclose(pa);
+}
+
+void RegistraSaida(PRODUTO reg){
+    FILE *pa = fopen("log.txt", "a");
+    if(!pa){
+        printf("erro.");
+        exit(1);
+    }
+    fprintf(pa,"Foi excluido %d unidade(s) do produto %s (ID: %d) do estoque.\n", reg.quantidade, reg.nome, reg.ID);
+    fclose(pa);
+}
+
 void insere(LISTA *l, PRODUTO reg) {
     ELEMENTO *novo = (ELEMENTO*)malloc(sizeof(ELEMENTO));
     load_global_id();
     reg.ID = globalID++;
     save_global_id();
+    Registra(reg);
     novo->reg = reg;
     novo->prox = l->inicio;
     l->inicio = novo;
@@ -133,6 +149,7 @@ void exclui(LISTA* l, int id) {
           anterior->prox = atual->prox;
         }
 
+      RegistraSaida(atual->reg);
       free(atual);
       printf("\nItem excluido com sucesso!!\n");
       bubbleSortPorData(l);
@@ -165,6 +182,7 @@ bool buscaSeqPorNome(LISTA *l, char *nome) {
     printf("Produto nao encontrado!!\n\n");
     return false;  // Elemento não encontrado
 }
+
 
 
 void menu() {
