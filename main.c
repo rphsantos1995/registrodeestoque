@@ -11,6 +11,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
+
 
 #define true 1
 #define false 0
@@ -150,13 +152,29 @@ void reinicializarLista(LISTA* l) {
     l->inicio = NULL;
 }
 
+bool buscaSeqPorNome(LISTA *l, char *nome) {
+    ELEMENTO *atual = l->inicio;
+    while (atual != NULL) {
+        if (strcmp(atual->reg.nome, nome) != 0)
+            atual = atual->prox;
+        else{
+            printf("Produto '%s' encontrado. Existem %d unidades dele no estoque!!\n\n", atual->reg.nome, atual->reg.quantidade);
+            return true;  // Elemento encontrado
+        }
+    }
+    printf("Produto nao encontrado!!\n\n");
+    return false;  // Elemento não encontrado
+}
+
+
 void menu() {
     printf("Escolha uma opção:\n");
     printf("1. Adicionar produto\n");
     printf("2. Tamanho da lista\n");
     printf("3. Remover da lista\n");
     printf("4. Listar produtos\n");
-    printf("5. Sair\n");
+    printf("5. Buscar produtos\n");
+    printf("6. Sair\n");
 }
 
 int comparacaoDatas(DATA d1, DATA d2) {
@@ -247,9 +265,15 @@ int main() {
             system("clear");
             bubbleSortPorData(&listaProdutos);
             exibirLista(&listaProdutos);
+        } else if (opcao == 5) {
+            system("clear");
+            char nomeProduto[50];
+            printf("Digite o nome do produto: ");
+            scanf("%s", nomeProduto);
+            buscaSeqPorNome(&listaProdutos, nomeProduto);
         }
 
-    } while (opcao != 5);
+    } while (opcao != 6);
 
     return 0;
 }
