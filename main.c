@@ -1,7 +1,7 @@
 /*
   TODO:
       * Remover e consultar com lista de produtos (nome e ID)
-      * Ler arquivo estoque.bin e armazenar na lista
+      * Ler arquivo estoque.bin e armazenar na lista - OK
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -45,6 +45,19 @@ typedef struct {
 
 void inicializarLista(LISTA* l) {
     l->inicio = NULL;
+
+    FILE *arquivo = fopen("estoque.bin", "r+");
+    if (arquivo != NULL){
+
+      PRODUTO produto;
+      while(fread(&produto, sizeof(PRODUTO), 1, arquivo)){
+        ELEMENTO *novo = (ELEMENTO*)malloc(sizeof(ELEMENTO));
+        novo->reg = produto;
+        novo->prox = l->inicio;
+        l->inicio = novo;
+      }
+      fclose(arquivo);
+    }
 }
 
 int tamanho(LISTA* l) {
@@ -99,6 +112,8 @@ void atualizaestoque(LISTA *l){
   }
   fclose(arquivo);
 }
+
+
 
 void Registra(PRODUTO reg){
     FILE *pa = fopen("log.txt", "a");
