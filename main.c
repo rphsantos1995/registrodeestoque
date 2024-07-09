@@ -1,13 +1,7 @@
-/*
-  TODO:
-      * Remover e consultar com lista de produtos (nome e ID)
-      * Ler arquivo estoque.bin e armazenar na lista - OK
- */
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
-
 
 #define true 1
 #define false 0
@@ -31,7 +25,6 @@ typedef struct {
     DATA data;
 } PRODUTO;
 
-
 typedef struct aux {
     PRODUTO reg;
     struct aux* prox;
@@ -46,17 +39,16 @@ typedef struct {
 void inicializarLista(LISTA* l) {
     l->inicio = NULL;
 
-    FILE *arquivo = fopen("estoque.bin", "r+");
-    if (arquivo != NULL){
-
-      PRODUTO produto;
-      while(fread(&produto, sizeof(PRODUTO), 1, arquivo)){
-        ELEMENTO *novo = (ELEMENTO*)malloc(sizeof(ELEMENTO));
-        novo->reg = produto;
-        novo->prox = l->inicio;
-        l->inicio = novo;
-      }
-      fclose(arquivo);
+    FILE *arquivo = fopen("estoque.bin", "rb");
+    if (arquivo != NULL) {
+        PRODUTO produto;
+        while (fread(&produto, sizeof(PRODUTO), 1, arquivo)) {
+            ELEMENTO *novo = (ELEMENTO*)malloc(sizeof(ELEMENTO));
+            novo->reg = produto;
+            novo->prox = l->inicio;
+            l->inicio = novo;
+        }
+        fclose(arquivo);
     }
 }
 
@@ -72,6 +64,7 @@ int tamanho(LISTA* l) {
 
 void exibirLista(LISTA *l) {
     PONT end = l->inicio;
+    printf("=============== Lista de Produtos ===============\n\n");
     while (end != NULL) {
         printf("ID: %d\n", end->reg.ID);
         printf("Produto: %s\n", end->reg.nome);
@@ -101,43 +94,40 @@ void save_global_id() {
 void bubbleSortPorData(LISTA *listaprodutos);
 int comparacaoDatas(DATA d1, DATA d2);
 
-void atualizaestoque(LISTA *l){
-  FILE *arquivo = fopen("estoque.bin", "wb");
-  if (arquivo == NULL) return;
+void atualizaestoque(LISTA *l) {
+    FILE *arquivo = fopen("estoque.bin", "wb");
+    if (arquivo == NULL) return;
 
-  ELEMENTO *atual = l->inicio;
-  while (atual != NULL) {
-      fwrite(&atual->reg, sizeof(PRODUTO), 1, arquivo);
-      atual = atual->prox;
-  }
-  fclose(arquivo);
+    ELEMENTO *atual = l->inicio;
+    while (atual != NULL) {
+        fwrite(&atual->reg, sizeof(PRODUTO), 1, arquivo);
+        atual = atual->prox;
+    }
+    fclose(arquivo);
 }
 
-
-
-void Registra(PRODUTO reg){
+void Registra(PRODUTO reg) {
     FILE *pa = fopen("log.txt", "a");
-    if(!pa){
-        printf("erro.");
+    if (!pa) {
+        printf("Erro ao abrir o log.\n");
         exit(1);
     }
-    fprintf(pa,"Foi acrescentado %d unidade(s) do produto %s (ID: %d) no estoque.\n", reg.quantidade, reg.nome, reg.ID);
+    fprintf(pa, "Foi acrescentado %d unidade(s) do produto %s (ID: %d) no estoque.\n", reg.quantidade, reg.nome, reg.ID);
     fclose(pa);
 }
 
-void RegistraSaida(PRODUTO reg){
+void RegistraSaida(PRODUTO reg) {
     FILE *pa = fopen("log.txt", "a");
-    if(!pa){
-        printf("erro.");
+    if (!pa) {
+        printf("Erro ao abrir o log.\n");
         exit(1);
     }
-    fprintf(pa,"Foi excluido %d unidade(s) do produto %s (ID: %d) do estoque.\n", reg.quantidade, reg.nome, reg.ID);
+    fprintf(pa, "Foi excluido %d unidade(s) do produto %s (ID: %d) do estoque.\n", reg.quantidade, reg.nome, reg.ID);
     fclose(pa);
 }
 
 void insere(LISTA *l, PRODUTO reg) {
     ELEMENTO *novo = (ELEMENTO*)malloc(sizeof(ELEMENTO));
-    load_global_id();
     reg.ID = globalID++;
     save_global_id();
     Registra(reg);
@@ -152,25 +142,25 @@ void exclui(LISTA* l, int id) {
     ELEMENTO *atual = l->inicio;
     ELEMENTO *anterior = NULL;
 
-    while(atual != NULL && atual->reg.ID != id){
-      anterior = atual;
-      atual = atual->prox;
+    while (atual != NULL && atual->reg.ID != id) {
+        anterior = atual;
+        atual = atual->prox;
     }
 
     if (atual != NULL) {
-      if (anterior == NULL) {
-          l->inicio = atual->prox;
+        if (anterior == NULL) {
+            l->inicio = atual->prox;
         } else {
-          anterior->prox = atual->prox;
+            anterior->prox = atual->prox;
         }
 
-      RegistraSaida(atual->reg);
-      free(atual);
-      printf("\nItem excluido com sucesso!!\n");
-      bubbleSortPorData(l);
-      atualizaestoque(l);
+        RegistraSaida(atual->reg);
+        free(atual);
+        printf("\nItem excluido com sucesso!!\n");
+        bubbleSortPorData(l);
+        atualizaestoque(l);
     } else {
-      printf("\nItem não encontrado! Tente outro ID!!\n");
+        printf("\nItem não encontrado! Tente outro ID!!\n");
     }
 }
 
@@ -189,25 +179,24 @@ bool buscaSeqPorNome(LISTA *l, char *nome) {
     while (atual != NULL) {
         if (strcmp(atual->reg.nome, nome) != 0)
             atual = atual->prox;
-        else{
+        else {
             printf("Produto '%s' encontrado. Existem %d unidades dele no estoque!!\n\n", atual->reg.nome, atual->reg.quantidade);
             return true;  // Elemento encontrado
         }
     }
-    printf("Produto nao encontrado!!\n\n");
-    return false;  // Elemento não encontrado
+    printf("Produto nao encontrado no estoque!!\n\n");
+    return false;  // Elemento não encontrado
 }
 
-
-
 void menu() {
-    printf("Escolha uma opção:\n");
+    printf("\n=============== Menu de Opcoes ===============\n");
     printf("1. Adicionar produto\n");
-    printf("2. Tamanho da lista\n");
-    printf("3. Remover da lista\n");
+    printf("2. Remover Produto\n");
+    printf("3. Tamanho da lista\n");
     printf("4. Listar produtos\n");
     printf("5. Buscar produtos\n");
     printf("6. Sair\n");
+    printf("==============================================\n\n");
 }
 
 int comparacaoDatas(DATA d1, DATA d2) {
@@ -249,26 +238,28 @@ void bubbleSortPorData(LISTA *listaprodutos) {
     } while (troca);
 }
 
-
 int main() {
     LISTA listaProdutos;
     inicializarLista(&listaProdutos);
+    load_global_id();
 
     int opcao;
     do {
         menu();
+        printf("Digite a opção desejada: ");
         scanf("%d", &opcao);
         getchar();
 
+        system("clear");
+
         if (opcao == 1) {
             PRODUTO produto;
-            system("clear");
+            printf("=============== Adicionar Produto ===============\n\n");
             printf("Digite o nome do produto: ");
-            scanf("%s", &produto.nome[0]);
+            scanf("%s", produto.nome);
             printf("Digite a quantidade do produto: ");
             scanf("%d", &produto.quantidade);
 
-            //Alimentando variavel data: https://stackoverflow.com/questions/1442116/how-to-get-the-date-and-time-values-in-a-c-program
             time_t t = time(NULL);
             struct tm tm = *localtime(&t);
             produto.data.dia = tm.tm_mday;
@@ -278,35 +269,38 @@ int main() {
             produto.data.segundo = tm.tm_sec;
 
             insere(&listaProdutos, produto);
-        } else if (opcao == 2){
-            system("clear");
-            printf("Tamanho da lista: %i\n", tamanho(&listaProdutos));
-        } else if (opcao == 3){
+            printf("\nProduto adicionado com sucesso!\n");
+        } else if (opcao == 2) {
             int id;
-            system("clear");
-            if (tamanho(&listaProdutos) == 0){
-              printf("Lista vazia - sem elementos para remover!\n\n");
-              continue;
+            printf("=============== Remover Produto ===============\n\n");
+            if (tamanho(&listaProdutos) == 0) {
+                printf("Lista vazia - sem elementos para Remover!\n\n");
+            } else {
+                printf("ID do item: ");
+                scanf("%d", &id);
+                exclui(&listaProdutos, id);
             }
-            else {
-              printf("======================== Removendo item da lista!!!! ========================\n");
-              printf("ID do item: ");
-              scanf("%d", &id);
-              exclui(&listaProdutos, id);
-            }
+        } else if (opcao == 3) {
+            printf("=============== Tamanho do Estoque ===============\n\n");
+            printf("Existem %i produtos no estoque.\n\n", tamanho(&listaProdutos));
         } else if (opcao == 4) {
-            system("clear");
             bubbleSortPorData(&listaProdutos);
             exibirLista(&listaProdutos);
         } else if (opcao == 5) {
-            system("clear");
-            char nomeProduto[50];
-            printf("Digite o nome do produto: ");
-            scanf("%s", nomeProduto);
-            buscaSeqPorNome(&listaProdutos, nomeProduto);
+            printf("=============== Buscar Produto ===============\n\n");
+            if (tamanho(&listaProdutos) == 0) {
+              printf("Lista vazia - sem elementos para Buscar!\n\n");
+            } else {
+              char nomeProduto[50];
+              printf("Digite o nome do produto: ");
+              scanf("%s", nomeProduto);
+              buscaSeqPorNome(&listaProdutos, nomeProduto);
+            }
+        } else if (opcao != 6) {
+            printf("Opção inválida! Tente novamente.\n");
         }
-
     } while (opcao != 6);
 
+    printf("Saindo...\n");
     return 0;
 }
