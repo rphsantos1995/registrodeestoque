@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include <ctype.h>
 
 #define true 1
 #define false 0
@@ -254,6 +255,15 @@ void bubbleSortPorData(LISTA *listaprodutos) {
     } while (troca);
 }
 
+int isNumber(const char *str) {
+    for (int i = 0; str[i] != '\0'; i++) {
+        if (!isdigit(str[i])) {
+            return 0; // Não é um número
+        }
+    }
+    return 1; // É um número
+}
+
 int main() {
     LISTA listaProdutos;
     inicializarLista(&listaProdutos);
@@ -274,19 +284,24 @@ int main() {
             printf("Digite o nome do produto: ");
             scanf("%s", produto.nome);
             printf("Digite a quantidade do produto: ");
-            scanf("%d", &produto.quantidade);
+            char quant[20];
+            scanf("%s", quant);
+            if(isNumber(quant)){
+              produto.quantidade = atoi(quant);
+              //definindo DATA do produto
+              time_t t = time(NULL);
+              struct tm tm = *localtime(&t);
+              produto.data.dia = tm.tm_mday;
+              produto.data.mes = tm.tm_mon + 1;
+              produto.data.hora = tm.tm_hour;
+              produto.data.minuto = tm.tm_min;
+              produto.data.segundo = tm.tm_sec;
 
-            //definindo DATA do produto
-            time_t t = time(NULL);
-            struct tm tm = *localtime(&t);
-            produto.data.dia = tm.tm_mday;
-            produto.data.mes = tm.tm_mon + 1;
-            produto.data.hora = tm.tm_hour;
-            produto.data.minuto = tm.tm_min;
-            produto.data.segundo = tm.tm_sec;
-
-            insere(&listaProdutos, produto);
-            printf("\nProduto adicionado com sucesso!\n");
+              insere(&listaProdutos, produto);
+              printf("\nProduto adicionado com sucesso!\n");
+            } else {
+              printf("\nQuantidade invalida!! Tente um numero!\n");
+            }
         } else if (opcao == 2) {
             int id;
             printf("=============== Remover Produto ===============\n\n");
