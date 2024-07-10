@@ -37,6 +37,7 @@ typedef struct {
     PONT inicio;
 } LISTA;
 
+// Le os produtos do 'estoque.bin' e insere na lista
 void inicializarLista(LISTA* l) {
     l->inicio = NULL;
 
@@ -53,6 +54,7 @@ void inicializarLista(LISTA* l) {
     }
 }
 
+// retorna quantidade de produtos
 int tamanho(LISTA* l) {
     PONT end = l->inicio;
     int tam = 0;
@@ -63,6 +65,7 @@ int tamanho(LISTA* l) {
     return tam;
 }
 
+// Exibe os produtos salvos
 void exibirLista(LISTA *l) {
     PONT end = l->inicio;
     printf("=============== Lista de Produtos ===============\n\n");
@@ -76,6 +79,7 @@ void exibirLista(LISTA *l) {
     }
 }
 
+// Le o ID do 'global_id.txt'
 void load_global_id() {
     FILE *file = fopen("global_id.txt", "r+");
     if (file != NULL) {
@@ -84,6 +88,7 @@ void load_global_id() {
     }
 }
 
+// Salva o proximo ID no 'global_id.txt'
 void save_global_id() {
     FILE *file = fopen("global_id.txt", "w");
     if (file != NULL) {
@@ -95,6 +100,7 @@ void save_global_id() {
 void bubbleSortPorData(LISTA *listaprodutos);
 int comparacaoDatas(DATA d1, DATA d2);
 
+// Registra produtos da lista no 'estoque.bin'
 void atualizaestoque(LISTA *l) {
     FILE *arquivo = fopen("estoque.bin", "wb");
     if (arquivo == NULL) return;
@@ -107,6 +113,7 @@ void atualizaestoque(LISTA *l) {
     fclose(arquivo);
 }
 
+// Registra a adição do produto em 'log.txt'
 void Registra(PRODUTO reg) {
     FILE *pa = fopen("log.txt", "a");
     if (!pa) {
@@ -117,6 +124,7 @@ void Registra(PRODUTO reg) {
     fclose(pa);
 }
 
+// Registra a exclusão do produto em 'log.txt'
 void RegistraSaida(PRODUTO reg) {
     FILE *pa = fopen("log.txt", "a");
     if (!pa) {
@@ -127,6 +135,7 @@ void RegistraSaida(PRODUTO reg) {
     fclose(pa);
 }
 
+// Insere o elemento da lista, Organiza a lista e atualiza o 'estoque.bin'
 void insere(LISTA *l, PRODUTO reg) {
     ELEMENTO *novo = (ELEMENTO*)malloc(sizeof(ELEMENTO));
     reg.ID = globalID++;
@@ -139,6 +148,7 @@ void insere(LISTA *l, PRODUTO reg) {
     atualizaestoque(l);
 }
 
+// Exclui o elemento da lista por ID, Organiza a lista e atualiza o 'estoque.bin'
 void exclui(LISTA* l, int id) {
     ELEMENTO *atual = l->inicio;
     ELEMENTO *anterior = NULL;
@@ -165,6 +175,7 @@ void exclui(LISTA* l, int id) {
     }
 }
 
+// ---------------
 void reinicializarLista(LISTA* l) {
     PONT end = l->inicio;
     while (end != NULL) {
@@ -175,6 +186,7 @@ void reinicializarLista(LISTA* l) {
     l->inicio = NULL;
 }
 
+// Busca na lista o elemento por nome
 bool buscaSeqPorNome(LISTA *l, char *nome) {
     ELEMENTO *atual = l->inicio;
     while (atual != NULL) {
@@ -189,6 +201,7 @@ bool buscaSeqPorNome(LISTA *l, char *nome) {
     return false;  // Elemento não encontrado
 }
 
+// Apresenta as opções na interface
 void menu() {
     printf("\n=============== Menu de Opcoes ===============\n");
     printf("1. Adicionar produto\n");
@@ -200,6 +213,7 @@ void menu() {
     printf("==============================================\n\n");
 }
 
+// Função auxiliar do bubblesort
 int comparacaoDatas(DATA d1, DATA d2) {
     if (d1.mes < d2.mes) return -1;
     if (d1.mes > d2.mes) return 1;
@@ -214,6 +228,7 @@ int comparacaoDatas(DATA d1, DATA d2) {
     return 0;
 }
 
+// Ordena a lista por data
 void bubbleSortPorData(LISTA *listaprodutos) {
     if (listaprodutos->inicio == NULL)
         return;
