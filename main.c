@@ -176,6 +176,33 @@ void exclui(LISTA* l, int id) {
     }
 }
 
+// Altera a quantidade e data
+void altera(LISTA *l, int quantidade, PRODUTO produto){
+  PONT atual = l->inicio;
+
+    while (atual != NULL) {
+        if (strcmp(atual->reg.nome, produto.nome) == 0) {
+            atual->reg.quantidade += quantidade;
+            atual->reg.data = produto.data;
+        }
+        atual = atual->prox;
+    }
+    atualizaestoque(l);
+}
+
+// Verifica se produto está no estoque
+int estaNoEstoque(LISTA listaProdutos, PRODUTO produto) {
+    PONT atual = listaProdutos.inicio;
+
+    while (atual != NULL) {
+        if (strcmp(atual->reg.nome, produto.nome) == 0) {
+            return 1;
+        }
+        atual = atual->prox;
+    }
+    return 0;
+}
+
 // ---------------
 void reinicializarLista(LISTA* l) {
     PONT end = l->inicio;
@@ -255,7 +282,8 @@ void bubbleSortPorData(LISTA *listaprodutos) {
     } while (troca);
 }
 
-int isNumber(const char *str) {
+// Verifica se o valor digitado é um numero
+int ehNumero(const char *str) {
     for (int i = 0; str[i] != '\0'; i++) {
         if (!isdigit(str[i])) {
             return 0; // Não é um número
@@ -281,36 +309,61 @@ int main() {
         if (opcao == 1) {
             PRODUTO produto;
             printf("=============== Adicionar Produto ===============\n\n");
+            
+            //definindo DATA do produto
+            time_t t = time(NULL);
+            struct tm tm = *localtime(&t);
+            produto.data.dia = tm.tm_mday;
+            produto.data.mes = tm.tm_mon + 1;
+            produto.data.hora = tm.tm_hour;
+            produto.data.minuto = tm.tm_min;
+            produto.data.segundo = tm.tm_sec;
             printf("Digite o nome do produto: ");
             scanf("%s", produto.nome);
-            printf("Digite a quantidade do produto: ");
-            char quant[20];
-            scanf("%s", quant);
-            if(isNumber(quant)){
-              produto.quantidade = atoi(quant);
-              //definindo DATA do produto
-              time_t t = time(NULL);
-              struct tm tm = *localtime(&t);
-              produto.data.dia = tm.tm_mday;
-              produto.data.mes = tm.tm_mon + 1;
-              produto.data.hora = tm.tm_hour;
-              produto.data.minuto = tm.tm_min;
-              produto.data.segundo = tm.tm_sec;
 
-              insere(&listaProdutos, produto);
-              printf("\nProduto adicionado com sucesso!\n");
+            if(estaNoEstoque(listaProdutos, produto)){
+              printf("\nEsse produto já existe");
+              printf("\nDigite uma quantidade para acresentar: ");
+              char quant[20];
+              scanf("%s", quant);
+              if(ehNumero(quant)){
+                int quantidade = atoi(quant);
+
+                altera(&listaProdutos, quantidade, produto);
+                printf("\nProduto Atualizado com sucesso!\n");
+              } else {
+                printf("\nQuantidade invalida!! Tente um numero!\n");
+              }
             } else {
-              printf("\nQuantidade invalida!! Tente um numero!\n");
+              printf("Digite a quantidade do produto: ");
+              char quant[20];
+              scanf("%s", quant);
+              if(ehNumero(quant)){
+                produto.quantidade = atoi(quant);
+
+                insere(&listaProdutos, produto);
+                printf("\nProduto adicionado com sucesso!\n");
+              } else {
+                printf("\nQuantidade invalida!! Tente um numero!\n");
+              }
+
             }
+
         } else if (opcao == 2) {
             int id;
             printf("=============== Remover Produto ===============\n\n");
             if (tamanho(&listaProdutos) == 0) {
                 printf("Lista vazia - sem elementos para Remover!\n\n");
             } else {
-                printf("ID do item: ");
-                scanf("%d", &id);
+              printf("ID do item: ");
+              char idProd[20];
+              scanf("%s", idProd);
+              if(ehNumero(idProd)){
+                int id = atoi(idProd);
                 exclui(&listaProdutos, id);
+              } else {
+                printf("\n ID invalido!! Tente um numero!\n");
+              }
             }
         } else if (opcao == 3) {
             printf("=============== Tamanho do Estoque ===============\n\n");
