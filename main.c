@@ -1,3 +1,4 @@
+// https://github.com/andreypereira08/registrodeestoque/
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -260,6 +261,7 @@ int main() {
             printf("Digite a quantidade do produto: ");
             scanf("%d", &produto.quantidade);
 
+            //definindo DATA do produto
             time_t t = time(NULL);
             struct tm tm = *localtime(&t);
             produto.data.dia = tm.tm_mday;
