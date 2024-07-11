@@ -136,6 +136,17 @@ void RegistraSaida(PRODUTO reg) {
     fclose(pa);
 }
 
+// Registra a alteração do produto em 'log.txt'
+void RegistraAtualizacao(PRODUTO reg){
+  FILE *pa = fopen("log.txt", "a");
+    if (!pa) {
+        printf("Erro ao abrir o log.\n");
+        exit(1);
+    }
+    fprintf(pa, "O produto '%s' foi alterado, possui %d unidade(s) e ID: %d.\n", reg.nome, reg.quantidade, reg.ID);
+    fclose(pa);
+}
+
 // Insere o elemento da lista, Organiza a lista e atualiza o 'estoque.bin'
 void insere(LISTA *l, PRODUTO reg) {
     ELEMENTO *novo = (ELEMENTO*)malloc(sizeof(ELEMENTO));
@@ -187,6 +198,7 @@ void altera(LISTA *l, int quantidade, PRODUTO produto){
         }
         atual = atual->prox;
     }
+    RegistraAtualizacao(produto);
     atualizaestoque(l);
 }
 
@@ -309,7 +321,7 @@ int main() {
         if (opcao == 1) {
             PRODUTO produto;
             printf("=============== Adicionar Produto ===============\n\n");
-            
+
             //definindo DATA do produto
             time_t t = time(NULL);
             struct tm tm = *localtime(&t);

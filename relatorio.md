@@ -101,7 +101,12 @@ As operações de inserção e remoção registram as ações em um arquivo de l
 - escrever registro de saída do produto
 - fechar arquivo
 
-#### 3.9 i`nsere(lista, produto)`
+#### 3.9 `RegistraAtualizacao(produto)`
+- abrir arquivo "log.txt" para anexar
+- escrever registro de atualização do produto
+- fechar arquivo
+
+#### 3.10 `insere(lista, produto)`
 - criar novo elemento
 - atribuir ID único ao produto
 - salvar globalID
@@ -110,7 +115,7 @@ As operações de inserção e remoção registram as ações em um arquivo de l
 - ordenar a lista por data
 - atualizar arquivo de estoque
 
-#### 3.10 `exclui(lista, id)`
+#### 3.11 `exclui(lista, id)`
 - encontrar elemento com o ID correspondente
 - se elemento encontrado:
   - remover elemento da lista
@@ -120,24 +125,25 @@ As operações de inserção e remoção registram as ações em um arquivo de l
 - senão:
   - imprimir "Item não encontrado!"
 
-#### 3.11 `altera(lista, quantidade, produto)`
+#### 3.12 `altera(lista, quantidade, produto)`
 - percorre a lista de produtos:
   - se o nome do produto coincidir com algum nome do produto da lista:
     - Adiciona quantidade a quantidade do produto da lista em questão
     - Atualiza a dada do produto da lista em questão
+- Registrar atualização do produto
 - Atualiza estoque
 
-#### 3.12 `estaNoEstoque(lista, produto)`
+#### 3.13 `estaNoEstoque(lista, produto)`
 - percorre a lista de produtos:
   - se o nome do produto coincidir com algum nome do produto da lista:
     - retornar verdadeiro
 - retornar falso
 
-#### 3.13 `reinicializarLista(lista)`
+#### 3.14 `reinicializarLista(lista)`
 - para cada elemento na lista:
   - liberar memória do elemento
 
-#### 3.14 `buscaSeqPorNome(lista, nome)`
+#### 3.15 `buscaSeqPorNome(lista, nome)`
 - para cada elemento na lista:
   - se nome do produto coincide:
     - imprimir detalhes do produto
@@ -145,11 +151,11 @@ As operações de inserção e remoção registram as ações em um arquivo de l
 - imprimir "Produto não encontrado!"
 - retornar falso
 
-#### 3.15 `comparacaoDatas(data1, data2)`
+#### 3.16 `comparacaoDatas(data1, data2)`
 - compara data1 e data2
 - retornar -1, 0 ou 1 baseado na comparação
 
-#### 3.16 `bubbleSortPorData(lista)`
+#### 3.17 `bubbleSortPorData(lista)`
 - se lista vazia:
   - retornar
 - repetir até que não haja trocas:
@@ -157,13 +163,13 @@ As operações de inserção e remoção registram as ações em um arquivo de l
     - se data do primeiro for menor que a do segundo:
       - trocar elementos
 
-#### 3.17 `ehNumero(string)`
+#### 3.18 `ehNumero(string)`
 - para cada caracter da string:
   - se não é um digito:
     - retornar false
 - retornar verdadeiro
 
-#### 3.18 `menu()`
+#### 3.19 `menu()`
 - imprimir as opções do menu
 
 ### 4. Main
@@ -229,3 +235,5 @@ A maior dificuldade que enfrentamos ao escrever o código foi na forma de implem
 O desenvolvimento deste programa de gerenciamento de estoque tem como objetivo proporcionar uma solução eficaz para a administração de produtos. Através de uma lista encadeada, o programa permite a inserção, remoção, exibição e busca de produtos de forma eficiente e organizada.
 
 O programa oferece uma maneira prática e automatizada de gerenciar um estoque, reduzindo a possibilidade de erros humanos e aumentando a eficiência na gestão dos produtos. A manutenção de logs detalhados das operações de inserção e remoção proporciona um histórico de movimentações que pode ser útil para análises futuras.
+
+Durante a apresentação do projeto em 10/07, o monitor e a professora fizeram sugestões importantes. Primeiro, a necessidade de tratar os dados para evitar conflitos, como impedir a inserção de caracteres em campos numéricos. Segundo, lidar com a adição de quantidades para produtos já existentes no estoque. Inicialmente, o código criava um novo produto com o mesmo nome, mas IDs e datas diferentes. Após a observação da professora Gisele, implementamos uma lógica que reconhece o produto pelo nome na opção "Adicionar Produto". Assim, o sistema permite adicionar quantidades ao estoque sem duplicar produtos.
