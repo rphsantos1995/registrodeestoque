@@ -1,0 +1,5 @@
+Foi acrescentado 15 unidade(s) do produto Notebook (ID: 0) no estoque.
+Foi acrescentado 50 unidade(s) do produto Mouse (ID: 1) no estoque.
+Foi acrescentado 30 unidade(s) do produto Teclado (ID: 2) no estoque.
+Foi acrescentado 20 unidade(s) do produto Monitor (ID: 3) no estoque.
+Foi acrescentado 10 unidade(s) do produto Impressora (ID: 4) no estoque.

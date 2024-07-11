@@ -7,7 +7,7 @@
 ### Rio de Janeiro
 ### 10 de julho de 2024
 
-**ALUNOS:**
+**Autores:**
 
 - Andrey Pereira - 123458697
 - Matheus Lourenço - 123571916
