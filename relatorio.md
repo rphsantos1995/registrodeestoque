@@ -9,10 +9,10 @@
 
 **ALUNOS:**
 
-- Sara Mendes - 120172103
 - Andrey Pereira - 123458697
-- Rodrigo Reis - 123585711
 - Matheus Lourenço - 123571916
+- Rodrigo Reis - 123585711
+- Sara Mendes - 120172103
 
 ## Sumário:
 
@@ -120,11 +120,24 @@ As operações de inserção e remoção registram as ações em um arquivo de l
 - senão:
   - imprimir "Item não encontrado!"
 
-#### 3.11 `reinicializarLista(lista)`
+#### 3.11 `altera(lista, quantidade, produto)`
+- percorre a lista de produtos:
+  - se o nome do produto coincidir com algum nome do produto da lista:
+    - Adiciona quantidade a quantidade do produto da lista em questão
+    - Atualiza a dada do produto da lista em questão
+- Atualiza estoque
+
+#### 3.12 `estaNoEstoque(lista, produto)`
+- percorre a lista de produtos:
+  - se o nome do produto coincidir com algum nome do produto da lista:
+    - retornar verdadeiro
+- retornar falso
+
+#### 3.13 `reinicializarLista(lista)`
 - para cada elemento na lista:
   - liberar memória do elemento
 
-#### 3.12 `buscaSeqPorNome(lista, nome)`
+#### 3.14 `buscaSeqPorNome(lista, nome)`
 - para cada elemento na lista:
   - se nome do produto coincide:
     - imprimir detalhes do produto
@@ -132,11 +145,11 @@ As operações de inserção e remoção registram as ações em um arquivo de l
 - imprimir "Produto não encontrado!"
 - retornar falso
 
-#### 3.13 `comparacaoDatas(data1, data2)`
+#### 3.15 `comparacaoDatas(data1, data2)`
 - compara data1 e data2
 - retornar -1, 0 ou 1 baseado na comparação
 
-#### 3.14 `bubbleSortPorData(lista)`
+#### 3.16 `bubbleSortPorData(lista)`
 - se lista vazia:
   - retornar
 - repetir até que não haja trocas:
@@ -144,7 +157,13 @@ As operações de inserção e remoção registram as ações em um arquivo de l
     - se data do primeiro for menor que a do segundo:
       - trocar elementos
 
-#### 3.15 `menu()`
+#### 3.17 `ehNumero(string)`
+- para cada caracter da string:
+  - se não é um digito:
+    - retornar false
+- retornar verdadeiro
+
+#### 3.18 `menu()`
 - imprimir as opções do menu
 
 ### 4. Main
@@ -157,7 +176,7 @@ Se o usuário escolher:
 1. Adicionar Produto
 	* Ler nome e quantidade do produto
 	* preencher data atual no produto
-	* inserir produto na lista
+	* inserir ou alterar produto na lista
 2. Imprimir tamanho da lista
 3. Remover Produto
 	* Ler id do produto
@@ -171,7 +190,7 @@ Se o usuário escolher:
 ## C. Descrição dos casos de teste projetados
 
 ### Teste adicionar produto
-Ao selecionar a opção 1 (adicionar produto) o usuário deverá digitar o nome do produto e sua quantidade. Após isso o item deverá ser adicionado à lista que está ordenada por data de adição junto com o seu ID próprio.
+Ao selecionar a opção 1 (adicionar produto) o usuário deverá digitar o nome do produto e sua quantidade. Após isso o item deverá ser adicionado à lista que está ordenada por data de adição junto com o seu ID próprio. Se o produto (nome do produto) estiver no estoque, deverá aparecer um campo para adicionar quantidades ao produto. Desse modo, é alterado a quantidade e data do produto em questão.
 
 ### Teste remover produto
 Ao selecionar a opção 2 (remover produto) o usuário deverá digitar o ID do produto a ser removido. Após isso o item será removido da lista. Se o estoque estiver vazio, deverá aparecer "Lista Vazia".
