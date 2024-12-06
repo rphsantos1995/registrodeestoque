@@ -2,17 +2,18 @@
 ## Ciência da Computação
 
 ## RELATÓRIO DO TRABALHO DE PROGRAMAÇÃO DE COMPUTADORES II
-### Registro de Estoque
+### Cinemateca virtual
 
 ### Rio de Janeiro
-### 10 de julho de 2024
+### 4 de dezembro de 2024
 
 **Autores:**
 
-- Andrey Pereira - 123458697
-- Matheus Lourenço - 123571916
-- Rodrigo Reis - 123585711
+- João Manhães - 123485432
 - Sara Mendes - 120172103
+- Rodrigo Reis - 123585711
+- Raphael Pereira - 123623802
+- Guilherme Cordeiro - 124161536
 
 ## Sumário:
 
@@ -27,15 +28,13 @@
 
 ## A. Descrição resumida do problema
 
-Nosso projeto consiste em criar um programa que gerencia um estoque de produtos. Ele mantém uma lista encadeada de produtos, onde cada produto possui um ID, nome, quantidade e data de registro. A lista é inicializada a partir de um arquivo binário ("estoque.bin") que contém os produtos previamente salvos. O programa permite as seguintes operações:
+Nosso projeto consiste em criar um programa que gerencia uma lista de filmes. Ele mantém uma lista encadeada, onde cada filme possui um ID, título, gênero, duração e nota. A lista é inicializada a partir de um arquivo binário ("catalogo.bin") que contém os filmes previamente salvos. O programa permite as seguintes operações:
 
-- **Adicionar Produto:** Insere um novo produto na lista com um ID único e data atual.
-- **Exibir Tamanho da Lista:** Mostra o número de produtos na lista.
-- **Remover Produto:** Remove um produto da lista pelo ID.
-- **Listar Produtos:** Exibe todos os produtos na lista, ordenados por data.
-- **Buscar Produto:** Procura um produto pelo nome e exibe a quantidade em estoque.
-
-As operações de inserção e remoção registram as ações em um arquivo de log ("log.txt") e atualizam o arquivo binário de estoque para persistência de dados. O programa também mantém e atualiza um ID global para assegurar IDs únicos para novos produtos.
+- **Adicionar filme:** Insere um novo filme na lista com um ID único.
+- **Exibir Tamanho da Lista:** Mostra o número de filmes na lista.
+- **Remover filme:** Remove um produto da lista pelo ID.
+- **Listar filmes:** Exibe todos os filmes na lista, ordenados por título.
+- **Buscar filmes:** Procura um filme pelo genero ou id e exibe o(s) resultado(s).
 
 ## B. Pseudocódigo do projeto
 
