@@ -160,27 +160,22 @@ Ao selecionar a opção 4 (buscar filme por titulo) o usuário deverá digitar o
 ### Teste buscar filme por genero
 Ao selecionar a opção 5 (buscar filme por genero) o usuário deverá digitar o genero a ser buscado. Após isso deverá ser mostrado o(s) filme(s) relativo(s) ao genero com suas informações. Se o genero não for encontrado, deverá aparecer que o "Nenhum filme encontrado no gênero".
 
-### Teste sair do programa
-Ao selecionar a opção 6 (sair do programa) o programa deverá ser finalizado e retornar 3 arquivos:
-- Um arquivo binário "estoque.bin" onde estarão todos os produtos em estoque.
-
-
 ## D. Testes realizados e resultados obtidos
 
-Durante os testes de adição de produtos, obtivemos resultados satisfatórios. Os produtos foram adicionados à lista ordenados por data de adição e com IDs únicos. Nos testes de remoção, também obtivemos os resultados esperados: os produtos foram removidos da lista, mantendo-a ordenada e descartando o ID correspondente. Quando o estoque estava vazio, o programa retornou a mensagem "Lista vazia - sem elementos para remover".
+Durante os testes de adição de filmes, obtivemos resultados satisfatórios. Os filmes foram adicionados à lista ordenados por titulo e com IDs únicos. Nos testes de remoção, também obtivemos os resultados esperados: os filmes foram removidos da lista, mantendo-a ordenada e descartando o ID correspondente. Quando o catalogo estava vazio, o programa retornou a mensagem "Lista vazia - sem elementos para remover".
 
-Nos testes para retornar o tamanho da lista, os resultados foram positivos. O programa retornou o tamanho correto da lista, inclusive quando estava vazia (ou seja, 0). Nos testes de listagem de produtos, os resultados também foram positivos. Os produtos foram listados em ordem de adição, juntamente com seus IDs, quantidades e datas e horas de adição.
+Nos testes para retornar o tamanho da lista, os resultados foram positivos. O programa retornou o tamanho correto da lista, inclusive quando estava vazia (ou seja, 0). Nos testes de listagem de filmes, os resultados também foram positivos. Os filmes foram listados em ordem alfabética com suas informações.
 
-Nos testes de busca, o programa respondeu corretamente. Quando digitado o nome de um produto presente no estoque, retornou "produto encontrado" e a quantidade disponível. Quando o produto não estava no estoque, retornou "produto não encontrado". Quando o estoque estava vazio, a mensagem foi "sem elementos para buscar".
+Nos testes de busca, o programa respondeu corretamente. Quando digitado o nome de um filme presente no catalogo, retornou o filme relativo ao título ou o(s) filme(s) relativo(s) ao genero procurado. Quando o filme não estava no catalogo, retornou "filme não encontrado". Quando o catalogo estava vazio, a mensagem foi "sem elementos para buscar".
 
-Nos testes de encerramento do programa, os resultados também foram positivos. O programa salvou corretamente os arquivos de estoque, ID e log.
+Nos testes de encerramento do programa, os resultados também foram positivos. O programa salvou corretamente o arquivo de catalogo.
 
 ## E. Dificuldades encontradas
 
-A maior dificuldade que enfrentamos ao escrever o código foi na forma de implementação do ID de cada produto, fazendo com que eles fossem únicos. A solução que encontramos foi criar um arquivo txt que armazena um contador de IDs e é incrementado a cada produto adicionado, de modo que o ID sempre será único.
+A maior dificuldade que enfrentamos foi a mudança de tema num curto prazo tendo que adaptar o escopo do projeto que já estava em desenvolvimento. 
 
 ## F. Conclusão
 
-O desenvolvimento deste programa de gerenciamento de estoque tem como objetivo proporcionar uma solução eficaz para a administração de produtos. Através de uma lista encadeada, o programa permite a inserção, remoção, exibição e busca de produtos de forma eficiente e organizada.
+O desenvolvimento deste programa de gerenciamento de catalogo tem como objetivo proporcionar uma solução eficaz para a administração de filmes. Através de uma lista encadeada, o programa permite a inserção, remoção, exibição e busca de filmes de forma eficiente e organizada.
 
-O programa oferece uma maneira prática e automatizada de gerenciar um estoque, reduzindo a possibilidade de erros humanos e aumentando a eficiência na gestão dos produtos. A manutenção de logs detalhados das operações de inserção e remoção proporciona um histórico de movimentações que pode ser útil para análises futuras.
+O programa oferece uma maneira prática e automatizada reduzindo a possibilidade de erros humanos e aumentando a eficiência na gestão dos filmes catalogados. 
