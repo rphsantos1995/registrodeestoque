@@ -151,11 +151,14 @@ Ao selecionar a opção 1 (adicionar filme) o usuário deverá digitar o titulo 
 ### Teste remover filme
 Ao selecionar a opção 2 (remover filme) o usuário deverá digitar o ID do produto a ser removido. Após isso o item será removido da lista. Se o catalago não tiver o id do filme, deverá ser exibido em tela "filme não encontrado".
 
-### Teste listar FILMES
-Ao selecionar a opção 4 (listar produtos) deverão ser listados todos os produtos do estoque ordenados pela data de adição na lista, junto ao seu ID, sua quantidade, e sua data e hora de adição. Se o estoque estiver vazio, não aparece nada.
+### Teste listar filmes
+Ao selecionar a opção 3 (listar filmes) deverão ser listados todos os filmes do catalogo ordenados pelo título na lista, junto ao seu ID, genero, duração, ano e nota. Se o catalogo estiver vazio, não aparece nada.
 
-### Teste buscar produtos
-Ao selecionar a opção 5 (buscar produto) o usuário deverá digitar o nome do produto a ser buscado. Após isso deverá ser mostrado o produto e sua quantidade. Se o produto não for encontrado, deverá aparecer que o "produto não foi encontrado no estoque".
+### Teste buscar filme por titulo
+Ao selecionar a opção 4 (buscar filme por titulo) o usuário deverá digitar o nome do filme a ser buscado. Após isso deverá ser mostrado o filme com suas informações. Se o filmenão for encontrado, deverá aparecer que o "Nenhum filme encontrado com o nome".
+
+### Teste buscar filme por genero
+Ao selecionar a opção 5 (buscar filme por genero) o usuário deverá digitar o genero a ser buscado. Após isso deverá ser mostrado o(s) filme(s) relativo(s) ao genero com suas informações. Se o genero não for encontrado, deverá aparecer que o "Nenhum filme encontrado no gênero".
 
 ### Teste sair do programa
 Ao selecionar a opção 6 (sair do programa) o programa deverá ser finalizado e retornar 3 arquivos:
