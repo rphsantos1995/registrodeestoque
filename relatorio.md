@@ -47,114 +47,68 @@ Nosso projeto consiste em criar um programa que gerencia uma lista de filmes. El
 
 ### 2. Tipos de Dados:
 - **Definindo tipos:**
-  - DATA (dia, mês, hora, minuto, segundo)
-  - PRODUTO (ID, nome, quantidade, data)
+  - FILME (ID, titulo, genero, duração e nota)
   - ELEMENTO (reg, prox)
   - LISTA (inicio)
 
 ### 3. Funções:
 
 #### 3.1 `inicializarLista(lista)`
-- abrir arquivo "estoque.bin" para leitura
+- abrir arquivo "catalogo.bin" para leitura
 - se o arquivo existe:
-  - enquanto ler produto do arquivo:
+  - enquanto ler o filme do arquivo:
     - criar novo elemento
-    - atribuir produto para o elemento
+    - atribuir filme para o elemento
     - adicionar o elemento no início da lista
   - fechar arquivo
 
 #### 3.2 `tamanho(lista)`
 - inicializar contador tam = 0
 - para cada elemento na lista:
-  - incrementar +1 em tam
+- incrementar +1 em tam
 - retornar tam
 
 #### 3.3 `exibirLista(lista)`
+- ordena os elementos da lista com bubbleSortTitulo(lista)
 - para cada um dos elementos na lista:
-  - imprimir detalhes do produto
+- imprimir detalhes do filme
 
-#### 3.4 `load_global_id()`
-- abrir arquivo "global_id.txt" para leitura
-- se o arquivo existe:
-  - ler globalID do arquivo
-  - fechar arquivo
-
-#### 3.5 `save_global_id()`
-- abrir arquivo "global_id.txt" para escrita
-- escrever globalID no arquivo
+#### 3.4 `atualizarCatalogo(lista)`
+- abrir arquivo "catalogo.bin" para escrita
+- para cada um dos elementos na lista
+- escrever filme no arquivo
 - fechar arquivo
 
-#### 3.6 `atualizaestoque(lista)`
-- abrir arquivo "estoque.bin" para escrita
-- para cada um dos elementos na lista:
-  - escrever produto no arquivo
-- fechar arquivo
-
-#### 3.7 `Registra(produto)`
-- abrir arquivo "log.txt" para anexar
-- escrever registro de entrada do produto
-- fechar arquivo
-
-#### 3.8 `RegistraSaida(produto)`
-- abrir arquivo "log.txt" para anexar
-- escrever registro de saída do produto
-- fechar arquivo
-
-#### 3.9 `RegistraAtualizacao(produto)`
-- abrir arquivo "log.txt" para anexar
-- escrever registro de atualização do produto
-- fechar arquivo
-
-#### 3.10 `insere(lista, produto)`
+#### 3.5 `adicionarFilme(lista)`
 - criar novo elemento
-- atribuir ID único ao produto
+- atribuir ID único ao filme
 - salvar globalID
-- registrar entrada do produto
-- adicionar produto ao início da lista
-- ordenar a lista por data
-- atualizar arquivo de estoque
+- registrar entrada do filme
+- adicionar filme ao início da lista
+- atualizar arquivo bin com atualizarCatalogo(LISTA* l)
 
-#### 3.11 `exclui(lista, id)`
+#### 3.6 `removerFilme(lista, id)`
 - encontrar elemento com o ID correspondente
 - se elemento encontrado:
   - remover elemento da lista
   - registrar saída do produto
-  - ordenar lista por data
-  - atualizar arquivo de estoque
+  - atualizar arquivo do catalogo
 - senão:
-  - imprimir "Item não encontrado!"
+  - imprimir "Filme não encontrado!"
 
-#### 3.12 `altera(lista, quantidade, produto)`
-- percorre a lista de produtos:
-  - se o nome do produto coincidir com algum nome do produto da lista:
-    - Adiciona quantidade a quantidade do produto da lista em questão
-    - Atualiza a dada do produto da lista em questão
-- Registrar atualização do produto
-- Atualiza estoque
-
-#### 3.13 `estaNoEstoque(lista, produto)`
-- percorre a lista de produtos:
-  - se o nome do produto coincidir com algum nome do produto da lista:
-    - retornar verdadeiro
-- retornar falso
-
-#### 3.14 `reinicializarLista(lista)`
+#### 3.8 `buscarFilmePorNome(lista, titulo)`
 - para cada elemento na lista:
-  - liberar memória do elemento
+  - se titulo do filme coincide:
+    - imprimir detalhes do filme
+  - se não encontrado:
+    - imprimir "Produto não encontrado!"
 
-#### 3.15 `buscaSeqPorNome(lista, nome)`
-- para cada elemento na lista:
-  - se nome do produto coincide:
-    - imprimir detalhes do produto
-    - retornar verdadeiro
-- imprimir "Produto não encontrado!"
-- retornar falso
 
-#### 3.16 `comparacaoDatas(data1, data2)`
+#### 3.14 `buscarFilmePorGenero(data1, data2)`
 - compara data1 e data2
 - retornar -1, 0 ou 1 baseado na comparação
 
-#### 3.17 `bubbleSortPorData(lista)`
+#### 3.15 `bubbleSortTitulo(lista)`
 - se lista vazia:
   - retornar
 - repetir até que não haja trocas:
@@ -162,7 +116,7 @@ Nosso projeto consiste em criar um programa que gerencia uma lista de filmes. El
     - se data do primeiro for menor que a do segundo:
       - trocar elementos
 
-#### 3.18 `ehNumero(string)`
+#### 3.16 `ehNumero(string)`
 - para cada caracter da string:
   - se não é um digito:
     - retornar false
