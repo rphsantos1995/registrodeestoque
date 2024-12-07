@@ -13,7 +13,6 @@
 - Sara Mendes - 120172103
 - Rodrigo Reis - 123585711
 - Raphael Pereira - 123623802
-- Guilherme Cordeiro - 124161536
 
 ## Sumário:
 
@@ -96,68 +95,63 @@ Nosso projeto consiste em criar um programa que gerencia uma lista de filmes. El
 - senão:
   - imprimir "Filme não encontrado!"
 
-#### 3.8 `buscarFilmePorNome(lista, titulo)`
+#### 3.7 `buscarFilmePorNome(lista, titulo)`
 - para cada elemento na lista:
   - se titulo do filme coincide:
     - imprimir detalhes do filme
   - se não encontrado:
-    - imprimir "Produto não encontrado!"
+    - imprimir "Nenhum filme encontrado com o nome"
 
+#### 3.8 `buscarFilmePorGenero(lista, genero)`
+- para cada elemento na lista:
+  - se genero do filme coincide:
+    - imprimir detalhes do filme
+  - se não encontrado:
+    - imprimir "Nenhum filme encontrado no gênero"
 
-#### 3.14 `buscarFilmePorGenero(data1, data2)`
-- compara data1 e data2
-- retornar -1, 0 ou 1 baseado na comparação
-
-#### 3.15 `bubbleSortTitulo(lista)`
+#### 3.9 `bubbleSortTitulo(lista)`
 - se lista vazia:
   - retornar
 - repetir até que não haja trocas:
   - para cada par de elementos consecutivos na lista:
-    - se data do primeiro for menor que a do segundo:
-      - trocar elementos
+    - se ordem alfabetica do primeiro for anterior ao segundo:
+    - trocar elementos
 
-#### 3.16 `ehNumero(string)`
-- para cada caracter da string:
-  - se não é um digito:
-    - retornar false
-- retornar verdadeiro
-
-#### 3.19 `menu()`
+#### 3.10 `menu()`
 - imprimir as opções do menu
 
 ### 4. Main
-- Inicializa variável listaProdutos tipo LISTA
+- Inicializa variável lista tipo LISTA
 - Inicializa a lista
 - Inicializa a variável opcao
+- Define fomatação de data pra pt-br
 - Abre o menu
 
 Se o usuário escolher:
-1. Adicionar Produto
-	* Ler nome e quantidade do produto
-	* preencher data atual no produto
-	* inserir ou alterar produto na lista
-2. Imprimir tamanho da lista
-3. Remover Produto
-	* Ler id do produto
-	* remover produto da lista pelo `ID`
-4. Exibir lista de produtos
-5. Buscar Produto
-	* Ler nome do produto
-	* buscar produto pelo nome
+1. Adicionar filme
+	* Ler titulo, genero, duração e nota
+	* inserir ou alterar filme na lista
+2. Remover filme
+	* Ler id do filme
+	* remover filme da lista pelo `ID`
+3. Exibir lista de filmes
+4. Buscar filme por titulo
+	* Ler titulo do filme
+	* buscar filme pelo titulo
+5. Buscar filme por genero
+	* Ler genero do filme
+	* buscar filme pelo genero
 6. Sair do programa
 
 ## C. Descrição dos casos de teste projetados
 
-### Teste adicionar produto
-Ao selecionar a opção 1 (adicionar produto) o usuário deverá digitar o nome do produto e sua quantidade. Após isso o item deverá ser adicionado à lista que está ordenada por data de adição junto com o seu ID próprio. Se o produto (nome do produto) estiver no estoque, deverá aparecer um campo para adicionar quantidades ao produto. Desse modo, é alterado a quantidade e data do produto em questão.
+### Teste adicionar filme
+Ao selecionar a opção 1 (adicionar filme) o usuário deverá digitar o titulo do filme, genero, ano, duração e nota. Após isso o item deverá ser adicionado à lista que está ordenada por titulo junto com o seu ID próprio. Se a duração ou a nota for diferente de um numero, exibe a mensagem de filme não adicionado e encerra a chamada da função.
 
-### Teste remover produto
-Ao selecionar a opção 2 (remover produto) o usuário deverá digitar o ID do produto a ser removido. Após isso o item será removido da lista. Se o estoque estiver vazio, deverá aparecer "Lista Vazia".
+### Teste remover filme
+Ao selecionar a opção 2 (remover filme) o usuário deverá digitar o ID do produto a ser removido. Após isso o item será removido da lista. Se o catalago não tiver o id do filme, deverá ser exibido em tela "filme não encontrado".
 
-### Teste tamanho da lista
-Ao selecionar a opção 3 (tamanho da lista) deverá aparecer a quantidade de produtos no estoque (não a quantidade total). Se o estoque estiver vazio deverá aparecer que "existem 0 produtos em estoque".
-
-### Teste listar produtos
+### Teste listar FILMES
 Ao selecionar a opção 4 (listar produtos) deverão ser listados todos os produtos do estoque ordenados pela data de adição na lista, junto ao seu ID, sua quantidade, e sua data e hora de adição. Se o estoque estiver vazio, não aparece nada.
 
 ### Teste buscar produtos
@@ -166,8 +160,7 @@ Ao selecionar a opção 5 (buscar produto) o usuário deverá digitar o nome do 
 ### Teste sair do programa
 Ao selecionar a opção 6 (sair do programa) o programa deverá ser finalizado e retornar 3 arquivos:
 - Um arquivo binário "estoque.bin" onde estarão todos os produtos em estoque.
-- Um arquivo "global_id.txt" onde terá o contador do ID, que a cada produto adicionado no estoque adicionará um ao ID, fazendo com que nunca tenha produtos de mesmo ID.
-- Um arquivo "log.txt" onde estarão todas as movimentações de adição e exclusão do estoque.
+
 
 ## D. Testes realizados e resultados obtidos
 
@@ -188,5 +181,3 @@ A maior dificuldade que enfrentamos ao escrever o código foi na forma de implem
 O desenvolvimento deste programa de gerenciamento de estoque tem como objetivo proporcionar uma solução eficaz para a administração de produtos. Através de uma lista encadeada, o programa permite a inserção, remoção, exibição e busca de produtos de forma eficiente e organizada.
 
 O programa oferece uma maneira prática e automatizada de gerenciar um estoque, reduzindo a possibilidade de erros humanos e aumentando a eficiência na gestão dos produtos. A manutenção de logs detalhados das operações de inserção e remoção proporciona um histórico de movimentações que pode ser útil para análises futuras.
-
-Durante a apresentação do projeto em 10/07, o monitor e a professora fizeram sugestões importantes. Primeiro, a necessidade de tratar os dados para evitar conflitos, como impedir a inserção de caracteres em campos numéricos. Segundo, lidar com a adição de quantidades para produtos já existentes no estoque. Inicialmente, o código criava um novo produto com o mesmo nome, mas IDs e datas diferentes. Após a observação da professora Gisele, implementamos uma lógica que reconhece o produto pelo nome na opção "Adicionar Produto". Assim, o sistema permite adicionar quantidades ao estoque sem duplicar produtos.
